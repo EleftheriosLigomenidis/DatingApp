@@ -31,6 +31,7 @@ namespace DatingApp.Controllers
 
        [HttpPost("register")]
 
+    
        public async Task<IActionResult> Register(UserForRegisterDto dto)
         {
             // validate request
@@ -54,7 +55,7 @@ namespace DatingApp.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("login")]
 
         public async Task<IActionResult> Login(UserForLoginDto userForLogin)
         {
@@ -70,9 +71,10 @@ namespace DatingApp.Controllers
                 new Claim(ClaimTypes.NameIdentifier,userFromRepo.Id.ToString()),
                 new Claim(ClaimTypes.Name,userFromRepo.Username)
             };
-
+            
+           
             var key = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(_conf.GetSection("AppSettings").Value)); // the signature of the server !! 
+                .GetBytes(_conf.GetSection("AppSettings:Token").Value)); // the signature of the server !!       
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
@@ -82,7 +84,7 @@ namespace DatingApp.Controllers
                 Expires = DateTime.Now.AddDays(1),
                 SigningCredentials = creds
             };
-
+             
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var token =tokenHandler.CreateToken(tokenDescriptor);

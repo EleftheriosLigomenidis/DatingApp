@@ -54,6 +54,9 @@ namespace DatingApp.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var mydate = new DateTime(1989, 1, 1);
+
+          var date =  mydate.Date;
         }
     }
 }
