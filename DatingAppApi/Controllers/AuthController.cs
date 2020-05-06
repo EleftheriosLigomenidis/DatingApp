@@ -59,6 +59,7 @@ namespace DatingApp.Controllers
 
         public async Task<IActionResult> Login(UserForLoginDto userForLogin)
         {
+            throw new Exception("you shall not pass");
             var userFromRepo = await _repo.Login(userForLogin.Username.ToLower(), userForLogin.Password);
 
             if(userFromRepo == null)
