@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -9,7 +10,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 })
 export class NavComponent implements OnInit {
 model: any = {}; // declare model
-  constructor(public authService: AuthService, private alertify: AlertifyService) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService,private router:Router) { }
 
   ngOnInit() {
   }
@@ -19,9 +20,12 @@ model: any = {}; // declare model
 // console.log('Logged in succesfully'); // the procedure is successful
 
 this.alertify.success('successfull login');
+
     }, error => {
       //console.log(error);
       this.alertify.error(error);
+    }, () =>{
+      this.router.navigate(['/members']);
     });
   }
 
@@ -34,5 +38,6 @@ this.alertify.success('successfull login');
     localStorage.removeItem('token');
     //console.log('logged out');
     this.alertify.message("logged out");
+    this.router.navigate(['/home']);
   }
 }
