@@ -79,6 +79,7 @@ namespace DatingApp
 
 
                 });
+            }
                 // Redirects Http to Https
                 //app.UseHttpsRedirection(); 
 
@@ -97,4 +98,4 @@ namespace DatingApp
             }
         }
     }
-}
+

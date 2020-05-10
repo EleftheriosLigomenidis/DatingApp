@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DatingApp.Models
 {
-    public class User
+    public  class User
     {
         public int Id { get; set; }
 
@@ -14,5 +14,7 @@ namespace DatingApp.Models
         public byte[] PasswordHash { get; set; }
 
         public byte[] PasswordSalt { get; set; }
+
+       
     }
 }

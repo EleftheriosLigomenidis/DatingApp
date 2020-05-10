@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
-
+import { AlertifyService } from '../_services/alertify.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -8,27 +9,30 @@ import { AuthService } from '../_services/auth.service';
 })
 export class NavComponent implements OnInit {
 model: any = {}; // declare model
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService) { }
 
   ngOnInit() {
   }
 
   login(){
     this.authService.login(this.model).subscribe(next => {
-console.log('Logged in succesfully'); // the procedure is successful
+// console.log('Logged in succesfully'); // the procedure is successful
 
+this.alertify.success('successfull login');
     }, error => {
-      console.log('Failed to login');
+      //console.log(error);
+      this.alertify.error(error);
     });
   }
 
   loggedIn(){
-    const token = localStorage.getItem('token');
-    return!!token;
+    
+    return this.authService.loggedIn();
   }
 
   logout(){
     localStorage.removeItem('token');
-    console.log('logged out');
+    //console.log('logged out');
+    this.alertify.message("logged out");
   }
 }

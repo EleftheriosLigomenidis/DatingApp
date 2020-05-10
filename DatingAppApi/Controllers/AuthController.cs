@@ -31,7 +31,7 @@ namespace DatingApp.Controllers
 
        [HttpPost("register")]
 
-    
+
        public async Task<IActionResult> Register(UserForRegisterDto dto)
         {
             // validate request
@@ -59,7 +59,7 @@ namespace DatingApp.Controllers
 
         public async Task<IActionResult> Login(UserForLoginDto userForLogin)
         {
-            throw new Exception("you shall not pass");
+            //throw new Exception("QQ");
             var userFromRepo = await _repo.Login(userForLogin.Username.ToLower(), userForLogin.Password);
 
             if(userFromRepo == null)
