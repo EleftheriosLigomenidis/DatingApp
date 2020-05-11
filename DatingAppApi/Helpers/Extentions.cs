@@ -16,5 +16,17 @@ namespace DatingApp.Helpers
 
                 
         }
+
+        public static int CalculateAge(this DateTime Birthday)
+        {
+            var age = DateTime.Today.Year - Birthday.Year;
+
+            // return a datetime variable tha adds the age years
+            if(Birthday.AddYears(age) > DateTime.Today)
+            {
+                age--;
+            }
+            return age;
+        }
     }
 }
