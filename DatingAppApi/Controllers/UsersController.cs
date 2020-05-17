@@ -30,7 +30,7 @@ namespace DatingApp.Controllers
             var users = await _repo.GetUsers();
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForDetailsDto>>(users);
-            return Ok(users);
+            return Ok(usersToReturn);
         }
 
         // GET: api/Users/5

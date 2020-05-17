@@ -24,7 +24,7 @@ this.alertify.success('successfull login');
     }, error => {
       //console.log(error);
       this.alertify.error(error);
-    }, () =>{
+    }, () => {
       this.router.navigate(['/members']);
     });
   }
