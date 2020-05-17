@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.Contracts;
@@ -38,7 +39,7 @@ namespace DatingApp.Controllers
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _repo.GetUser(id);
-            var userDto = _mapper.Map<UserForDetailsDto>(user);
+         var userDto = _mapper.Map<UserForDetailsDto>(user);
             return Ok(userDto);
         }
 
@@ -50,8 +51,25 @@ namespace DatingApp.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto dto)
         {
+            // check if the user updating matches the token
+
+            //need to check the code below :/
+            //if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            //{
+            //    return Unauthorized();
+            //}
+
+            var user = await _repo.GetUser(id);
+
+            _mapper.Map(dto, user);
+            if(await _repo.SaveAll())
+            {
+                return NoContent();
+            }
+
+            throw new Exception($"Updating use {id} failed on save");
         }
 
         // DELETE: api/ApiWithActions/5

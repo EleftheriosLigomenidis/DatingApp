@@ -22,9 +22,12 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AlertifyService } from './_services/alertify.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
-import { MemberListResolver } from './resolvers/member-detail.resolver';
+import { MemberEditResolver } from './resolvers/member-edit.resolver';
 import { MemberDetailResolver } from './resolvers/member-list.resolver';
 import { NgxGalleryModule } from 'ngx-gallery-9';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { MemberListResolver } from './resolvers/member-detail.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
 
 
@@ -43,7 +46,9 @@ return localStorage.getItem('token');
       ListsComponent,
       MessagesComponent,
       MemberCardComponent,
-      MemberDetailComponent
+      MemberDetailComponent,
+      MemberEditComponent
+      
    ],
    imports: [
       BrowserModule,
@@ -70,7 +75,9 @@ return localStorage.getItem('token');
       AuthGuard,
       UserService,
       MemberListResolver,
-      MemberDetailResolver
+      MemberDetailResolver,
+      MemberEditResolver,
+      PreventUnsavedChanges
     
       
    ],
