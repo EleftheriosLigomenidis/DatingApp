@@ -47,7 +47,8 @@ namespace DatingApp
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(o => o.TokenValidationParameters = new TokenValidationParameters
+                .AddJwtBearer(o => o.TokenValidationParameters =
+                new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Appsettings:Token").Value)),
@@ -90,7 +91,7 @@ namespace DatingApp
                 app.UseRouting();
 
                 app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-                app.UseAuthorization();
+                app.UseAuthentication();
                 app.UseAuthorization();
 
                 app.UseEndpoints(endpoints =>

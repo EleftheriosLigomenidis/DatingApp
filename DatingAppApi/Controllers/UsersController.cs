@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.Controllers
 {
- 
+[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -53,13 +53,11 @@ namespace DatingApp.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto dto)
         {
-            // check if the user updating matches the token
-
-            //need to check the code below :/
-            //if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            //{
-            //    return Unauthorized();
-            //}
+        
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
 
             var user = await _repo.GetUser(id);
 
