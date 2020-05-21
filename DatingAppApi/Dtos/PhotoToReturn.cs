@@ -1,10 +1,11 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-using System;
-
-namespace DatingApp.Models
+namespace DatingApp.Dtos
 {
-    public class Photo
+    public class PhotoToReturn
     {
         public int Id { get; set; }
 
@@ -16,8 +17,6 @@ namespace DatingApp.Models
 
         public bool IsMain { get; set; }
 
-        public string PuplicId { get; set; }
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+        public string PublicId { get; set; }
     }
 }
