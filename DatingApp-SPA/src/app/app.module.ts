@@ -24,10 +24,12 @@ import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
 import { MemberEditResolver } from './resolvers/member-edit.resolver';
 import { MemberDetailResolver } from './resolvers/member-list.resolver';
+import {PhotoEditorComponent} from './members/photo-editor/photo-editor.component';
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberListResolver } from './resolvers/member-detail.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 
@@ -47,7 +49,8 @@ return localStorage.getItem('token');
       MessagesComponent,
       MemberCardComponent,
       MemberDetailComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      PhotoEditorComponent
       
    ],
    imports: [
@@ -57,6 +60,7 @@ return localStorage.getItem('token');
       BrowserAnimationsModule,
       BsDropdownModule.forRoot(),
       NgxGalleryModule,
+      FileUploadModule,
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
       JwtModule.forRoot({

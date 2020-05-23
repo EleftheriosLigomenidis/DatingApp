@@ -30,6 +30,11 @@ namespace DatingApp.Repositories
             _context.Remove(entity);
         }
 
+        public async Task<Photo> GetMainPhoto(int id)
+        {
+            return await _context.Photos.Where(u => u.UserId == id).FirstOrDefaultAsync(p => p.IsMain);
+        }
+
         public async Task<Photo> GetPhoto(int id)
         {
             var photo = await _context.Photos.FirstOrDefaultAsync( p => p.Id == id);
