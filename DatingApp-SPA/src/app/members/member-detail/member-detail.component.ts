@@ -23,7 +23,8 @@ galleryImages: NgxGalleryImage[];
 
     
 
-   })
+   });
+   
    this.galleryOptions = [
     {
       width:'500px',

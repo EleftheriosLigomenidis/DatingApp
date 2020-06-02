@@ -14,17 +14,17 @@ photoUrl:string;
   constructor(public authService: AuthService, private alertify: AlertifyService,private router:Router) { }
 
   ngOnInit() {
-    this.authService.currentUrl.subscribe(photoUrl =>this.photoUrl = photoUrl);
+    this.authService.currentUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 
   login(){
     this.authService.login(this.model).subscribe(next => {
-// console.log('Logged in succesfully'); // the procedure is successful
+
 
 this.alertify.success('successfull login');
 
     }, error => {
-      //console.log(error);
+  
       this.alertify.error(error);
     }, () => {
       this.router.navigate(['/members']);

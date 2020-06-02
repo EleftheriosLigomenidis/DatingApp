@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DatingApp.Contracts;
 using DatingApp.Data;
+using DatingApp.Helpers;
 using DatingApp.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -53,6 +54,14 @@ namespace DatingApp.Repositories
             var users = await _context.Users.Include(p => p.Photos).ToListAsync();
 
             return users;
+        }
+
+        public  async Task<PagedList<User>> GetUsers(UserParams userParams)
+        {
+            var users = _context.Users.Include(p => p.Photos);
+
+            return await PagedList<User>.CreateAsync(users,userParams.PageNumber,userParams.PageSize);
+     
         }
 
         public async Task<bool> SaveAll()

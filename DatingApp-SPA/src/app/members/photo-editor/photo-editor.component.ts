@@ -47,17 +47,19 @@ constructor(private authService: AuthService,
         isMain: res.isMain
       };
       this.photos.push(photo);
+      if(photo.isMain){
+        this.authService.changeMemberPhoto(photo.url);
+        this.authService.currentUser.photoUrl = photo.url;
+        localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
+      }
     }
-    
-  }
-
-  //this.uploader.response.subscribe( res => this.response = res );
+  }//this.uploader.response.subscribe( res => this.response = res );
 }
 
   ngOnInit() {
   }
 setMainPhoto(photo: Photo){
-  console.log(photo);
+ 
   this.userService.setMainPhoto(this.authService.decodedToken.nameid, photo.id).subscribe(() =>{
   this.currentMainPhoto = this.photos.filter(p => p.isMain === true)[0];
   this.currentMainPhoto.isMain = false;
@@ -77,7 +79,7 @@ deletePhoto(id:number){
       this.photos.splice(this.photos.findIndex(p => p.id === id),1);
       this.alertify.success('photo deleted')
     },error =>{
-this.alertify.error("Failes to delete the photo");
+this.alertify.error("Failed to delete the photo");
     })
   })
 }
