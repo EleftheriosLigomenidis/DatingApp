@@ -32,7 +32,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimeagoModule } from 'ngx-timeago';
-
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 export function tokenGetter(){
 return localStorage.getItem('token');
@@ -63,6 +63,7 @@ return localStorage.getItem('token');
       BsDropdownModule.forRoot(),
       NgxGalleryModule,
       FileUploadModule,
+      PaginationModule.forRoot(),
       TimeagoModule.forRoot(),
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
