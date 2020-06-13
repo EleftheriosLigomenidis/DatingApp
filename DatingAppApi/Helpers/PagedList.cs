@@ -11,7 +11,7 @@ namespace DatingApp.Helpers
         public PagedList(List<T> items , int count, int pageNumber, int pageSize)
         {
             TotalCount = count;
-            PageSize = PageSize;
+            PageSize = pageSize;
             CurrentPage = pageNumber; 
             // have 13 users and i want to display 5 each play the i ll gave 3 pages!!
             TotalPage = (int)Math.Ceiling(count / (double)pageSize);
