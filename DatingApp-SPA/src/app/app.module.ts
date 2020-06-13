@@ -34,6 +34,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimeagoModule } from 'ngx-timeago';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { ListsResolver } from './resolvers/list.resolver';
 
 
 
@@ -89,6 +90,7 @@ return localStorage.getItem('token');
       MemberListResolver,
       MemberDetailResolver,
       MemberEditResolver,
+      ListsResolver,
       PreventUnsavedChanges
     
       

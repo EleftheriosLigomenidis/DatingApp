@@ -22,7 +22,7 @@ baseUrl = environment.apiUrl;
 
 constructor(private http: HttpClient) { }
 
-getUsers(page?,itemsPerPage?,userParams?): Observable<PaginationResult<User[]>>{
+getUsers(page?,itemsPerPage?, userParams?, likesParams?): Observable<PaginationResult<User[]>>{
   const paginatedResult:PaginationResult<User[]> = new PaginationResult<User[]>(); 
   //creating new instance
   let params = new HttpParams();
@@ -38,6 +38,14 @@ getUsers(page?,itemsPerPage?,userParams?): Observable<PaginationResult<User[]>>{
       params = params.append('orderBy', userParams.orderBy);
 
     }
+
+    if(likesParams == 'Likers'){
+params = params.append('likers','true');
+    }
+
+    if(likesParams == 'Likees'){
+      params = params.append('likees','true');
+          }
   }
 
 
@@ -69,5 +77,9 @@ setMainPhoto(userId: number, photoId: number){
 
 deletePhoto(userId:number,photoId:number){
   return this.http.delete(this.baseUrl + 'users/' + userId + '/photos/' + photoId +'/setMain',{});
+}
+
+sendLike(id:number,recipientId:number){
+  return this.http.post(this.baseUrl + 'users/' + id + '/like/' + recipientId,{})
 }
 }

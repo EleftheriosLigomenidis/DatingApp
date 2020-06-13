@@ -113,7 +113,7 @@ namespace DatingApp.Controllers
             {
                 return Ok();
             }
-        
+            return BadRequest("Failed to like user");
         }
 
 
