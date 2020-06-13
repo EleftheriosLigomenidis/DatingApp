@@ -25,7 +25,11 @@ namespace DatingApp.Repositories
         {
             _context.Add(entity);
         }
-
+        public async Task<Like> GetLike(int userId,int recipientId)
+        {
+            return await _context.Likes.FirstOrDefaultAsync(l => l.LikeeId == recipientId 
+            && l.LikerId == userId);
+        }
         public void Delete<T>(T entity) where T : class
         {
             _context.Remove(entity);
@@ -61,7 +65,7 @@ namespace DatingApp.Repositories
 
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users = _context.Users.Include(p => p.Photos).AsQueryable();
+            var users = _context.Users.Include(p => p.Photos).OrderByDescending(u => u.LastActive).AsQueryable();
 
             users = users.Where(u => u.Id != userParams.UserId);
 
@@ -74,7 +78,21 @@ namespace DatingApp.Repositories
 
                 users = users.Where(u => u.DateOfBirth >= minDateOfBirth && u.DateOfBirth <= maxDob);
 
-            } 
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(userParams.OrderBy))
+            {
+                switch (userParams.OrderBy)
+                {
+                    case "created":
+                        users = users.OrderByDescending(u => u.Created);
+                            break;
+                    default:
+                        users = users.OrderByDescending(u => u.Created);
+                        break;
+                }
+            }
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
 
         }

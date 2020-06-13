@@ -33,6 +33,9 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimeagoModule } from 'ngx-timeago';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+
+
 
 export function tokenGetter(){
 return localStorage.getItem('token');
@@ -64,6 +67,7 @@ return localStorage.getItem('token');
       NgxGalleryModule,
       FileUploadModule,
       PaginationModule.forRoot(),
+      ButtonsModule.forRoot(),
       TimeagoModule.forRoot(),
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),

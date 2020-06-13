@@ -32,6 +32,8 @@ userParams:any ={};
     this.userParams.gender = this.user.gender ==='female' ? 'male' : 'female';
     this.userParams.minAge =18;
     this.userParams.maxAge = 99;
+    this.userParams.maxAge = 99;
+    this.userParams.ordeBy ="lastActive"
     this.loadUsers();
   }
 

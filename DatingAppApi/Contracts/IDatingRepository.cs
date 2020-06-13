@@ -18,5 +18,7 @@ namespace DatingApp.Contracts
         Task<Photo> GetPhoto(int id);
 
         Task<Photo> GetMainPhoto(int id);
+
+        Task<Like> GetLike(int userId, int recipientId);
     }
 }
