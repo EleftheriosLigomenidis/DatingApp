@@ -14,6 +14,7 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import {MemberCardComponent} from './members/member-card/member-card.component';
 import {MemberDetailComponent} from './members/member-detail/member-detail.component';
 import { MessagesComponent } from './messages/messages.component';
+import {MemberMessagesComponent} from './members/member-messages/member-messages.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './route';
 import { ListsComponent } from './lists/lists.component';
@@ -23,11 +24,11 @@ import { AlertifyService } from './_services/alertify.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
 import { MemberEditResolver } from './resolvers/member-edit.resolver';
-import { MemberDetailResolver } from './resolvers/member-list.resolver';
+import { MemberDetailResolver } from './resolvers/member-details.resolver';
 import {PhotoEditorComponent} from './members/photo-editor/photo-editor.component';
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
-import { MemberListResolver } from './resolvers/member-detail.resolver';
+import { MemberListResolver } from './resolvers/member-list.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -35,7 +36,7 @@ import { TimeagoModule } from 'ngx-timeago';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { ListsResolver } from './resolvers/list.resolver';
-
+import {MessagesResolver } from './resolvers/messages.resolver';
 
 
 export function tokenGetter(){
@@ -54,7 +55,8 @@ return localStorage.getItem('token');
       MemberCardComponent,
       MemberDetailComponent,
       MemberEditComponent,
-      PhotoEditorComponent
+      PhotoEditorComponent,
+      MemberMessagesComponent
       
    ],
    imports: [
@@ -91,6 +93,7 @@ return localStorage.getItem('token');
       MemberDetailResolver,
       MemberEditResolver,
       ListsResolver,
+      MessagesResolver,
       PreventUnsavedChanges
     
       

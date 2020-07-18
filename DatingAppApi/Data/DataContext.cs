@@ -33,7 +33,7 @@ namespace DatingApp.Data
             builder.Entity<Like>()
              .HasOne(l => l.Liker)
              .WithMany(l => l.Likees)
-             .HasForeignKey(u => u.LikeeId)
+             .HasForeignKey(u => u.LikerId)
              .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Message>()

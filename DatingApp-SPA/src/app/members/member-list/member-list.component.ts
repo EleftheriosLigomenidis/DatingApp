@@ -19,21 +19,23 @@ userParams:any ={};
     ,private  route :ActivatedRoute) { }
 
   ngOnInit() {
+    debugger
    this.route.data.subscribe(data =>{
      this.users = data['users'].result;
      this.pagination = data['users'].pagination;
-   })
+   });
+
+  
    this.userParams.gender = this.user.gender ==='female' ? 'male' : 'female';
    this.userParams.minAge =18;
    this.userParams.maxAge = 99;
   }
 
   resetFilters(){
-    this.userParams.gender = this.user.gender ==='female' ? 'male' : 'female';
-    this.userParams.minAge =18;
+    this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
+    this.userParams.minAge = 18;
     this.userParams.maxAge = 99;
-    this.userParams.maxAge = 99;
-    this.userParams.ordeBy ="lastActive"
+    this.userParams.orderBy = "lastActive";
     this.loadUsers();
   }
 
@@ -42,8 +44,11 @@ userParams:any ={};
     this.loadUsers();
   }
 loadUsers(){
-  this.userService.getUsers(this.pagination.currentPage,this.pagination.itemsPerPage,this.userParams)
+debugger
+  this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)
+ 
   .subscribe((res:PaginationResult<User[]>)=>{
+
 this.users = res.result;
 this.pagination = res.pagination;
 }, error => {

@@ -71,10 +71,10 @@ namespace DatingApp.Repositories
 
             users = users.Where(u => u.Gender == userParams.Gender);
 
-            if (userParams.MinAge != 18 || userParams.MinAge != 99)
+            if (userParams.MinAge != 18 || userParams.MaxAge != 99)
             {
                 var minDateOfBirth = DateTime.Today.AddYears(-userParams.MaxAge - 1);
-                var maxDob = DateTime.Today.AddDays(-userParams.MinAge + 1);
+                var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
 
                 users = users.Where(u => u.DateOfBirth >= minDateOfBirth && u.DateOfBirth <= maxDob);
 
@@ -84,6 +84,7 @@ namespace DatingApp.Repositories
             {
                 var userLikers = await GetUserLikes(userParams.UserId, userParams.Likers);
                 users = users.Where(u => userLikers.Contains(u.Id));
+       
             }
 
             if (userParams.Likers)
@@ -100,7 +101,7 @@ namespace DatingApp.Repositories
                         users = users.OrderByDescending(u => u.Created);
                             break;
                     default:
-                        users = users.OrderByDescending(u => u.Created);
+                        users = users.OrderByDescending(u => u.LastActive);
                         break;
                 }
             }
@@ -111,8 +112,10 @@ namespace DatingApp.Repositories
         private async Task<IEnumerable<int>> GetUserLikes(int id,bool likers)
         {
             // the current uer
-            var user = await  _context.Users.Include(u => u.Likers)
-                .Include(u => u.Likees).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await  _context.Users
+                .Include(u => u.Likers)
+                .Include(u => u.Likees)
+                .FirstOrDefaultAsync(u => u.Id == id);
 
 
             if (likers)
@@ -123,7 +126,7 @@ namespace DatingApp.Repositories
             else
             {
                 //users who the current user likes
-                return user.Likers.Where(u => u.LikerId == id).Select(u => u.LikeeId);
+                return user.Likees.Where(u => u.LikerId == id).Select(u => u.LikeeId);
             }
         }
 
@@ -148,13 +151,13 @@ namespace DatingApp.Repositories
             switch (messageParams.MessagesContainer)
             {
                 case "Inbox":
-                    messages = messages.Where(u => u.RecipientId == messageParams.UserId);
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.RecipientDeleted!=false);
                     break;
                 case"Outbox":
-                     messages = messages.Where(u => u.SenderId == messageParams.UserId);
+                     messages = messages.Where(u => u.SenderId == messageParams.UserId && u.SenderDeleted !=false);
                     break;
                 default:
-                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.IsRead);
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.IsRead && u.RecipientDeleted !=false);
                     break;
             }
 
@@ -167,7 +170,8 @@ namespace DatingApp.Repositories
         {
               var messages = await _context.Messages.Include(u => u.Sender)
                 .ThenInclude(p => p.Photos).Include(u => u.Recipient)
-                .Where(m => m.RecipientId == userId && m.SenderId == recipientId ||
+                .Where(m => m.RecipientId == userId && m.RecipientDeleted!=false && m.SenderId == recipientId && m.SenderDeleted!=false
+                ||
                 recipientId ==m.RecipientId && m.SenderId == userId).OrderByDescending(m => m.MessageSent).ToListAsync();
 
             return messages;
