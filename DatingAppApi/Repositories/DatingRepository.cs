@@ -151,13 +151,13 @@ namespace DatingApp.Repositories
             switch (messageParams.MessagesContainer)
             {
                 case "Inbox":
-                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.RecipientDeleted!=false);
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.RecipientDeleted==false);
                     break;
                 case"Outbox":
-                     messages = messages.Where(u => u.SenderId == messageParams.UserId && u.SenderDeleted !=false);
+                     messages = messages.Where(u => u.SenderId == messageParams.UserId && u.SenderDeleted ==false);
                     break;
                 default:
-                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.IsRead && u.RecipientDeleted !=false);
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.IsRead==false && u.RecipientDeleted ==false);
                     break;
             }
 
@@ -168,11 +168,15 @@ namespace DatingApp.Repositories
 
         public async Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId)
         {
-              var messages = await _context.Messages.Include(u => u.Sender)
+              var messages = await _context.Messages
+                .Include(u => u.Sender)
                 .ThenInclude(p => p.Photos).Include(u => u.Recipient)
-                .Where(m => m.RecipientId == userId && m.RecipientDeleted!=false && m.SenderId == recipientId && m.SenderDeleted!=false
-                ||
-                recipientId ==m.RecipientId && m.SenderId == userId).OrderByDescending(m => m.MessageSent).ToListAsync();
+                .Where(m => m.RecipientId == userId && m.RecipientDeleted==false 
+                && m.SenderId == recipientId 
+                || m.RecipientId == recipientId && m.SenderId == userId 
+                && m.SenderDeleted ==false)
+                .OrderByDescending(m => m.MessageSent)
+                .ToListAsync();
 
             return messages;
         }

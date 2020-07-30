@@ -21,6 +21,7 @@ messageContainer = 'Unread';
 
   ngOnInit() {
     this.route.data.subscribe(data => {
+
       this.messages = data['messages'].result;
       this.pagination = data['messages'].pagination;
     });

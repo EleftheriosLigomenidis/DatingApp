@@ -44,7 +44,7 @@ userParams:any ={};
     this.loadUsers();
   }
 loadUsers(){
-debugger
+
   this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)
  
   .subscribe((res:PaginationResult<User[]>)=>{

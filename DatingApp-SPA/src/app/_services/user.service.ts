@@ -85,8 +85,10 @@ sendLike(id:number,recipientId:number){
 }
 getMessages(id:number,page?,itemsPerPage?,messageContainer?){
   const paginatedResult:PaginationResult<Message[]> = new PaginationResult<Message[]>();
+
   let params = new HttpParams();
   params = params.append('MessageContainer',messageContainer)
+  
   if(page != null && itemsPerPage !=null){
     params = params.append('pageNumber', page);
     params = params.append('pageSize', itemsPerPage);
@@ -104,6 +106,7 @@ map(response => {
   )}
 
   getMessageThread(id:number,recipientId:number){
+    debugger;
     return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages/thread/' + recipientId);
   }
 
